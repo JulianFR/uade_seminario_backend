@@ -97,7 +97,7 @@ function getCredencial(req, res, next) {
 exports.getCredencial = getCredencial;
 function postCredenciales(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, contraseña, cliente, existeCredencial, usuario;
+        var _a, email, contraseña, cliente, existeCredencial, usuario, resultado;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -121,9 +121,9 @@ function postCredenciales(req, res, next) {
                         throw { codigo: 400, mensajeDesarrollador: "No puede crearse la credencial, usuario creado tiene id nulo." };
                     return [4 /*yield*/, cliente.db().collection("credenciales").insertOne({ email: email, contraseña: contraseña, usuario: usuario })];
                 case 4:
-                    _b.sent();
+                    resultado = _b.sent();
                     mongo.cerrarCliente(cliente);
-                    return [2 /*return*/, res.status(200).send()];
+                    return [2 /*return*/, res.status(200).send({ data: { usuario: { id: resultado.insertedId } } })];
             }
         });
     });

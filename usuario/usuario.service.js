@@ -43,7 +43,7 @@ function getUsuario(req, res) {
         var usuario;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, usuario_model_1.Usuario.buscarUsuarioPorId(req.body.id)];
+                case 0: return [4 /*yield*/, usuario_model_1.Usuario.buscarUsuarioPorId(req.params.id)];
                 case 1:
                     usuario = _a.sent();
                     if (!usuario)
