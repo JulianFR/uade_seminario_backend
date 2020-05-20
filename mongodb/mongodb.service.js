@@ -36,29 +36,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prueba = void 0;
+exports.cerrarCliente = exports.obtenerCliente = void 0;
 var mongodb_1 = require("mongodb");
-var uri = process.env.MONGODB_URI;
-var client = new mongodb_1.MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-function prueba() {
-    console.log(uri);
-    var _this = this;
-    client.connect(function () { return __awaiter(_this, void 0, void 0, function () {
-        var cursor, _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+function obtenerCliente() {
+    return __awaiter(this, void 0, void 0, function () {
+        var uri, opciones;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    cursor = client.db().collection("huespedes").find({});
-                    // perform actions on the collection object
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, cursor.toArray()];
-                case 1:
-                    // perform actions on the collection object
-                    _b.apply(_a, [_c.sent()]);
-                    client.close();
-                    return [2 /*return*/];
+                    uri = process.env.MONGODB_URI;
+                    opciones = { useNewUrlParser: true, useUnifiedTopology: true };
+                    return [4 /*yield*/, new mongodb_1.MongoClient(uri, opciones).connect()];
+                case 1: return [2 /*return*/, _a.sent()];
             }
         });
-    }); });
+    });
 }
-exports.prueba = prueba;
+exports.obtenerCliente = obtenerCliente;
+function cerrarCliente(cliente) {
+    if (cliente)
+        cliente.close();
+}
+exports.cerrarCliente = cerrarCliente;
