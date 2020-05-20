@@ -123,7 +123,7 @@ function postCredenciales(req, res, next) {
                 case 4:
                     resultado = _b.sent();
                     mongo.cerrarCliente(cliente);
-                    return [2 /*return*/, res.status(200).send({ data: { usuario: { id: resultado.insertedId } } })];
+                    return [2 /*return*/, res.status(200).send({ data: { usuario: usuario } })];
             }
         });
     });
