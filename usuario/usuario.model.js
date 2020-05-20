@@ -118,7 +118,9 @@ var Usuario = /** @class */ (function () {
                         return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
                         cliente = _a.sent();
-                        usuarios = cliente.db().collection("usuarios").find({ email: email }).toArray();
+                        return [4 /*yield*/, cliente.db().collection("usuarios").find({ email: email }).toArray()];
+                    case 2:
+                        usuarios = _a.sent();
                         mongo.cerrarCliente(cliente);
                         return [2 /*return*/, usuarios];
                 }
