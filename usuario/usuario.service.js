@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postUsuario = exports.getUsuarios = exports.getUsuario = void 0;
+exports.putUsuario = exports.postUsuario = exports.getUsuarios = exports.getUsuario = void 0;
 var usuario_model_1 = require("./usuario.model");
 function getUsuario(req, res) {
     return __awaiter(this, void 0, void 0, function () {
@@ -79,12 +79,10 @@ exports.getUsuarios = getUsuarios;
 function postUsuario(_a, res) {
     var body = _a.body;
     return __awaiter(this, void 0, void 0, function () {
-        var email, usuario;
+        var usuario;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
-                    email = body.email;
-                    return [4 /*yield*/, usuario_model_1.Usuario.crearUsuario(email)];
+                case 0: return [4 /*yield*/, usuario_model_1.Usuario.crearUsuario(body)];
                 case 1:
                     usuario = _b.sent();
                     return [2 /*return*/, res.status(200).json({ data: { usuario: usuario } })];
@@ -93,3 +91,18 @@ function postUsuario(_a, res) {
     });
 }
 exports.postUsuario = postUsuario;
+function putUsuario(_a, res) {
+    var body = _a.body;
+    return __awaiter(this, void 0, void 0, function () {
+        var usuario;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, usuario_model_1.Usuario.sobreescribirUsuario(body)];
+                case 1:
+                    usuario = _b.sent();
+                    return [2 /*return*/, res.status(200).json({ data: { usuario: usuario } })];
+            }
+        });
+    });
+}
+exports.putUsuario = putUsuario;

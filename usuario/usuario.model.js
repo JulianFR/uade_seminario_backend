@@ -59,29 +59,67 @@ exports.Usuario = void 0;
 var mongo = __importStar(require("../mongodb/mongodb.service"));
 var mongodb_1 = require("mongodb");
 var Usuario = /** @class */ (function () {
-    function Usuario() {
+    function Usuario(u) {
+        this.email = u.email;
+        this.nombre = u.nombre;
+        this.apellido = u.apellido;
+        this.correoElectronico = u.correoElectronico;
+        this.fotoPerfil = u.fotoPerfil;
+        this.tipo = u.tipo;
+        this.documento = u.documento;
+        this.pais = u.pais;
+        this.estado = u.estado;
+        this.ciudad = u.ciudad;
+        this.codigoPostal = u.codigoPostal;
+        this.direccion = u.direccion;
+        this.compañia = u.compañia;
+        this.perfil = u.perfil;
+        this.reservas = u.reservas;
+        this.tarjetas = u.tarjetas;
+        this.servicios = u.servicios;
+        this.comentarios = u.comentarios;
     }
-    Usuario.crearUsuario = function (email) {
+    Usuario.crearUsuario = function (usuario) {
         return __awaiter(this, void 0, void 0, function () {
-            var cliente, existeUsuario, usuario;
+            var cliente, existeUsuario, resultado;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!email)
+                        if (!usuario.email)
                             throw { codigo: 400, mensajeDesarrollador: "No puede crearse el usuario, email nulo." };
                         return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
                         cliente = _a.sent();
-                        return [4 /*yield*/, cliente.db().collection("usuarios").find({ email: email }).count()];
+                        return [4 /*yield*/, cliente.db().collection("usuarios").find({ email: usuario.email }).count()];
                     case 2:
                         existeUsuario = _a.sent();
                         if (existeUsuario)
                             throw { codigo: 400, mensajeDesarrollador: "No puede crearse el usuario, ya existe." };
-                        return [4 /*yield*/, cliente.db().collection("usuarios").insertOne({ email: email })];
+                        return [4 /*yield*/, cliente.db().collection("usuarios").insertOne({ usuario: usuario })];
                     case 3:
-                        usuario = _a.sent();
+                        resultado = _a.sent();
                         mongo.cerrarCliente(cliente);
-                        return [2 /*return*/, usuario.insertedId];
+                        return [2 /*return*/, resultado.insertedId];
+                }
+            });
+        });
+    };
+    Usuario.sobreescribirUsuario = function (usuario) {
+        return __awaiter(this, void 0, void 0, function () {
+            var cliente, resultado;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!usuario.email)
+                            throw { codigo: 400, mensajeDesarrollador: "No puede crearse el usuario, email nulo." };
+                        return [4 /*yield*/, mongo.obtenerCliente()];
+                    case 1:
+                        cliente = _a.sent();
+                        return [4 /*yield*/, cliente.db().collection("usuarios").replaceOne({ email: usuario.email }, usuario, { upsert: true })];
+                    case 2:
+                        resultado = _a.sent();
+                        mongo.cerrarCliente(cliente);
+                        return [2 /*return*/, resultado.upsertedId];
                 }
             });
         });

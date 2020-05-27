@@ -13,7 +13,8 @@ var UsuarioController = /** @class */ (function () {
         this.rutador
             .get("/usuario/:id", main_util_1.atraparErroresAsincronos(usuario_service_1.getUsuario))
             .get("/usuarios", main_util_1.atraparErroresAsincronos(usuario_service_1.getUsuarios))
-            .post("/usuarios", main_util_1.atraparErroresAsincronos(usuario_service_1.postUsuario));
+            .post("/usuarios", main_util_1.atraparErroresAsincronos(usuario_service_1.postUsuario))
+            .put("/usuarios", main_util_1.atraparErroresAsincronos(usuario_service_1.putUsuario));
     }
     return UsuarioController;
 }());
