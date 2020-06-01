@@ -11,6 +11,7 @@ var usuario_controller_1 = require("./usuario/usuario.controller");
 express_1.default()
     .use(morgan_1.default("dev"))
     .use(express_1.default.json())
+    .use(main_middleware_1.cors)
     .use('/api/v1.0/', new credenciales_controller_1.CredencialesController().rutador)
     .use('/api/v1.0/', new usuario_controller_1.UsuarioController().rutador)
     .use(main_middleware_1.manejadorDeErrores)
