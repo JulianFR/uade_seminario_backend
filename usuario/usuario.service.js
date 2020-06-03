@@ -47,7 +47,12 @@ function getUsuario(req, res) {
                 case 1:
                     usuario = _a.sent();
                     if (!usuario)
-                        return [2 /*return*/, res.status(404).send()];
+                        return [2 /*return*/, res.status(404).json({
+                                error: {
+                                    codigo: 404,
+                                    mensajeDesarrollador: "No puede obtenerse el usuario, _id no encontrado"
+                                }
+                            })];
                     return [2 /*return*/, res.status(200).json({ data: { usuario: usuario } })];
             }
         });
@@ -66,7 +71,12 @@ function getUsuarios(req, res) {
                     usuarios = _a.sent();
                     cantidadUsuarios = usuarios.length;
                     if (cantidadUsuarios === 0)
-                        return [2 /*return*/, res.status(404).send()];
+                        return [2 /*return*/, res.status(404).send({
+                                error: {
+                                    codigo: 404,
+                                    mensajeDesarrollador: "No puede obtenerse el usuario, email no encontrado"
+                                }
+                            })];
                     if (cantidadUsuarios > 1)
                         throw { codigo: 500, mensajeDesarrollador: "No puede obtenerse el usuario, más de un usuario con el mismo email." };
                     usuario = usuarios[0];
