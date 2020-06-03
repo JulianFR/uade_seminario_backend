@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -99,7 +110,7 @@ var Usuario = /** @class */ (function () {
                     case 3:
                         resultado = _a.sent();
                         mongo.cerrarCliente(cliente);
-                        return [2 /*return*/, resultado.insertedId];
+                        return [2 /*return*/, __assign({ _id: resultado.insertedId }, usuario)];
                 }
             });
         });
@@ -115,11 +126,11 @@ var Usuario = /** @class */ (function () {
                         return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
                         cliente = _a.sent();
-                        return [4 /*yield*/, cliente.db().collection("usuarios").replaceOne({ email: usuario.email }, usuario, { upsert: true })];
+                        return [4 /*yield*/, cliente.db().collection("usuarios").findOneAndReplace({ email: usuario.email }, usuario, { upsert: true })];
                     case 2:
                         resultado = _a.sent();
                         mongo.cerrarCliente(cliente);
-                        return [2 /*return*/, resultado.upsertedId];
+                        return [2 /*return*/, resultado.value || __assign({ _id: resultado.lastErrorObject.upserted }, usuario)];
                 }
             });
         });

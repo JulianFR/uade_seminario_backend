@@ -110,7 +110,13 @@ function putUsuario(_a, res) {
                 case 0: return [4 /*yield*/, usuario_model_1.Usuario.sobreescribirUsuario(body)];
                 case 1:
                     usuario = _b.sent();
-                    return [2 /*return*/, res.status(200).json({ data: { usuario: usuario } })];
+                    if (usuario) {
+                        return [2 /*return*/, res.status(201).json({ data: { usuario: usuario } })];
+                    }
+                    else {
+                        return [2 /*return*/, res.status(204).send()];
+                    }
+                    return [2 /*return*/];
             }
         });
     });
