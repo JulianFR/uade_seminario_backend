@@ -74,14 +74,22 @@ var Hotel = /** @class */ (function () {
     }
     Hotel.crearHotel = function (hotel) {
         return __awaiter(this, void 0, void 0, function () {
-            var cliente, resultado;
+            var cliente, existeHotel, resultado;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, mongo.obtenerCliente()];
+                    case 0:
+                        if (!hotel.email)
+                            throw { codigo: 400, mensajeDesarrollador: "No puede crearse el hotel, email nulo." };
+                        return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
                         cliente = _a.sent();
-                        return [4 /*yield*/, cliente.db().collection("hoteles").insertOne(hotel)];
+                        return [4 /*yield*/, cliente.db().collection("hoteles").find({ email: hotel.email }).count()];
                     case 2:
+                        existeHotel = _a.sent();
+                        if (existeHotel)
+                            throw { codigo: 400, mensajeDesarrollador: "No puede crearse el hotel, ya existe." };
+                        return [4 /*yield*/, cliente.db().collection("hoteles").insertOne(hotel)];
+                    case 3:
                         resultado = _a.sent();
                         mongo.cerrarCliente(cliente);
                         return [2 /*return*/, __assign({ _id: resultado.insertedId }, hotel)];
@@ -91,17 +99,16 @@ var Hotel = /** @class */ (function () {
     };
     Hotel.sobreescribirHotel = function (hotel) {
         return __awaiter(this, void 0, void 0, function () {
-            var _id, cliente, resultado;
+            var cliente, resultado;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!hotel.id)
-                            throw { codigo: 400, mensajeDesarrollador: "No puede crearse el hotel, id nulo." };
-                        _id = new mongodb_1.ObjectID(hotel.id);
+                        if (!hotel.email)
+                            throw { codigo: 400, mensajeDesarrollador: "No puede sobreescribirse el hotel, email nulo." };
                         return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
                         cliente = _a.sent();
-                        return [4 /*yield*/, cliente.db().collection("hoteles").findOneAndReplace({ _id: _id }, hotel, { upsert: true })];
+                        return [4 /*yield*/, cliente.db().collection("hoteles").findOneAndReplace({ email: hotel.email }, hotel, { upsert: true })];
                     case 2:
                         resultado = _a.sent();
                         mongo.cerrarCliente(cliente);
@@ -127,6 +134,26 @@ var Hotel = /** @class */ (function () {
                         hotel = _a.sent();
                         mongo.cerrarCliente(cliente);
                         return [2 /*return*/, hotel];
+                }
+            });
+        });
+    };
+    Hotel.buscarHotelPorEmail = function (email) {
+        return __awaiter(this, void 0, void 0, function () {
+            var cliente, hoteles;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!email)
+                            throw { codigo: 400, mensajeDesarrollador: "No puede obtenerse el hotel, email nulo." };
+                        return [4 /*yield*/, mongo.obtenerCliente()];
+                    case 1:
+                        cliente = _a.sent();
+                        return [4 /*yield*/, cliente.db().collection("hoteles").find({ email: email }).toArray()];
+                    case 2:
+                        hoteles = _a.sent();
+                        mongo.cerrarCliente(cliente);
+                        return [2 /*return*/, hoteles];
                 }
             });
         });

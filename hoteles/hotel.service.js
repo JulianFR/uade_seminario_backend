@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putHotel = exports.postHotel = exports.getHotel = void 0;
+exports.putHotel = exports.postHotel = exports.getHoteles = exports.getHotel = void 0;
 var hotel_model_1 = require("./hotel.model");
 function getHotel(req, res) {
     return __awaiter(this, void 0, void 0, function () {
@@ -59,6 +59,33 @@ function getHotel(req, res) {
     });
 }
 exports.getHotel = getHotel;
+function getHoteles(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var email, hoteles, cantidadHoteles, hotel;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    email = req.query.email;
+                    return [4 /*yield*/, hotel_model_1.Hotel.buscarHotelPorEmail(email)];
+                case 1:
+                    hoteles = _a.sent();
+                    cantidadHoteles = hoteles.length;
+                    if (cantidadHoteles === 0)
+                        return [2 /*return*/, res.status(404).send({
+                                error: {
+                                    codigo: 404,
+                                    mensajeDesarrollador: "No puede obtenerse el hotel, email no encontrado"
+                                }
+                            })];
+                    if (cantidadHoteles > 1)
+                        throw { codigo: 500, mensajeDesarrollador: "No puede obtenerse el hotel, más de un hotel con el mismo email." };
+                    hotel = hoteles[0];
+                    return [2 /*return*/, res.status(200).json({ data: { hotel: hotel } })];
+            }
+        });
+    });
+}
+exports.getHoteles = getHoteles;
 function postHotel(_a, res) {
     var body = _a.body;
     return __awaiter(this, void 0, void 0, function () {

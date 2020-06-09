@@ -12,6 +12,7 @@ var HotelesController = /** @class */ (function () {
         this.ruta = express_1.default.Router();
         this.ruta
             .get("/hotel/:id", main_util_1.atraparErroresAsincronos(hotel_service_1.getHotel))
+            .get("/hoteles", main_util_1.atraparErroresAsincronos(hotel_service_1.getHoteles))
             .post("/hoteles", main_util_1.atraparErroresAsincronos(hotel_service_1.postHotel))
             .put("/hoteles", main_util_1.atraparErroresAsincronos(hotel_service_1.putHotel));
     }

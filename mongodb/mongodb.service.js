@@ -44,7 +44,7 @@ function obtenerCliente() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    uri = process.env.MONGODB_URI;
+                    uri = "mongodb+srv://Julian:Juanca@cluster0-aw1hn.gcp.mongodb.net/seminario_1?retryWrites=true&w=majority";
                     opciones = { useNewUrlParser: true, useUnifiedTopology: true };
                     return [4 /*yield*/, new mongodb_1.MongoClient(uri, opciones).connect()];
                 case 1: return [2 /*return*/, _a.sent()];
