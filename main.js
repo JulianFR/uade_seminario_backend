@@ -9,6 +9,7 @@ var main_middleware_1 = require("./main.middleware");
 var credenciales_controller_1 = require("./credenciales/credenciales.controller");
 var usuario_controller_1 = require("./usuario/usuario.controller");
 var hoteles_controller_1 = require("./hoteles/hoteles.controller");
+var reservas_controller_1 = require("./reservas/reservas.controller");
 express_1.default()
     .use(morgan_1.default("dev"))
     .use(express_1.default.json())
@@ -16,5 +17,6 @@ express_1.default()
     .use('/api/v1.0/', new credenciales_controller_1.CredencialesController().rutador)
     .use('/api/v1.0/', new usuario_controller_1.UsuarioController().rutador)
     .use('/api/v1.0/', new hoteles_controller_1.HotelesController().ruta)
+    .use('/api/v1.0/reservas', new reservas_controller_1.ReservasController().ruta)
     .use(main_middleware_1.manejadorDeErrores)
     .listen(process.env.PORT || 3000);

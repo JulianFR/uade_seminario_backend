@@ -36,25 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cerrarCliente = exports.obtenerCliente = void 0;
-var mongodb_1 = require("mongodb");
-function obtenerCliente() {
+exports.postReserva = exports.getReserva = void 0;
+var reserva_model_1 = require("./reserva.model");
+function getReserva(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var uri, opciones;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    uri = process.env.MONGODB_URI;
-                    opciones = { useNewUrlParser: true, useUnifiedTopology: true };
-                    return [4 /*yield*/, new mongodb_1.MongoClient(uri, opciones).connect()];
-                case 1: return [2 /*return*/, _a.sent()];
+                    _b = (_a = res.status(200)).json;
+                    return [4 /*yield*/, reserva_model_1.Reserva.buscarReservaPorId(req.params.id)];
+                case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
             }
         });
     });
 }
-exports.obtenerCliente = obtenerCliente;
-function cerrarCliente(cliente) {
-    if (cliente)
-        cliente.close();
+exports.getReserva = getReserva;
+function postReserva(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _b = (_a = res.status(200)).json;
+                    return [4 /*yield*/, reserva_model_1.Reserva.crearReserva(req.body)];
+                case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
+            }
+        });
+    });
 }
-exports.cerrarCliente = cerrarCliente;
+exports.postReserva = postReserva;
