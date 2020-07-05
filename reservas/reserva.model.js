@@ -113,13 +113,12 @@ var Reserva = /** @class */ (function () {
                     case 4:
                         numeracionReserva = _a.sent();
                         if (!!numeracionReserva) return [3 /*break*/, 6];
+                        numeroReserva = 1;
                         return [4 /*yield*/, cliente.db().collection("numeracion").insertOne({ numeracion: "reservas", numero: numeroReserva })];
                     case 5:
                         _a.sent();
-                        numeroReserva = 1;
                         return [3 /*break*/, 8];
                     case 6:
-                        console.log(numeracionReserva.numero);
                         numeroReserva = numeracionReserva.numero + 1;
                         return [4 /*yield*/, cliente.db().collection("numeracion").findOneAndReplace({ numeracion: "reservas" }, { numeracion: "reservas", numero: numeroReserva })];
                     case 7:
@@ -144,7 +143,7 @@ var Reserva = /** @class */ (function () {
                     case 11:
                         _a.sent();
                         mongo.cerrarCliente(cliente);
-                        return [2 /*return*/, __assign({ _id: _id }, datos)];
+                        return [2 /*return*/, __assign(__assign({ _id: _id }, datos), { numero: numeroReserva })];
                 }
             });
         });
