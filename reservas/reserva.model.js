@@ -97,36 +97,36 @@ var Reserva = /** @class */ (function () {
     };
     Reserva.crearReserva = function (datos) {
         return __awaiter(this, void 0, void 0, function () {
-            var cliente, huesped, hotel, numeracionReserva, numeroReserva, resultado, _id;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var cliente, huesped, hotel, numeracionReserva, numeroReserva, resultado, _id, _a, _b, checkIn, _c, checkOut, _d, precio, _e, cantHuespedes;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
                     case 0: return [4 /*yield*/, mongo.obtenerCliente()];
                     case 1:
-                        cliente = _a.sent();
+                        cliente = _f.sent();
                         return [4 /*yield*/, usuario_model_1.Usuario.buscarUsuarioPorEmail(datos.huesped)];
                     case 2:
-                        huesped = (_a.sent())[0];
+                        huesped = (_f.sent())[0];
                         return [4 /*yield*/, hotel_model_1.Hotel.buscarHotelPorEmail(datos.hotel)];
                     case 3:
-                        hotel = (_a.sent())[0];
+                        hotel = (_f.sent())[0];
                         return [4 /*yield*/, cliente.db().collection("numeracion").findOne({ numeracion: "reservas" })];
                     case 4:
-                        numeracionReserva = _a.sent();
+                        numeracionReserva = _f.sent();
                         if (!!numeracionReserva) return [3 /*break*/, 6];
                         numeroReserva = 1;
                         return [4 /*yield*/, cliente.db().collection("numeracion").insertOne({ numeracion: "reservas", numero: numeroReserva })];
                     case 5:
-                        _a.sent();
+                        _f.sent();
                         return [3 /*break*/, 8];
                     case 6:
                         numeroReserva = numeracionReserva.numero + 1;
                         return [4 /*yield*/, cliente.db().collection("numeracion").findOneAndReplace({ numeracion: "reservas" }, { numeracion: "reservas", numero: numeroReserva })];
                     case 7:
-                        _a.sent();
-                        _a.label = 8;
+                        _f.sent();
+                        _f.label = 8;
                     case 8: return [4 /*yield*/, cliente.db().collection("reservas").insertOne(__assign(__assign({}, datos), { numero: numeroReserva }))];
                     case 9:
-                        resultado = _a.sent();
+                        resultado = _f.sent();
                         _id = resultado.insertedId;
                         if (!huesped.reservas) {
                             huesped.reservas = [];
@@ -134,14 +134,15 @@ var Reserva = /** @class */ (function () {
                         if (!hotel.reservas) {
                             hotel.reservas = [];
                         }
-                        huesped.reservas.push({ _id: _id, numero: numeroReserva, hotel: datos.hotel, checkIn: datos.checkIn, cantHuespedes: datos.cantHuespedes });
-                        hotel.reservas.push({ _id: _id, numero: numeroReserva, huesped: datos.huesped, checkIn: datos.checkIn, cantHuespedes: datos.cantHuespedes });
+                        _a = __assign({}, datos), _b = _a.checkIn, checkIn = _b === void 0 ? undefined : _b, _c = _a.checkOut, checkOut = _c === void 0 ? undefined : _c, _d = _a.precio, precio = _d === void 0 ? undefined : _d, _e = _a.cantHuespedes, cantHuespedes = _e === void 0 ? undefined : _e;
+                        huesped.reservas.push({ _id: _id, numero: numeroReserva, hotel: datos.hotel, checkIn: checkIn, checkOut: checkOut, cantHuespedes: cantHuespedes, precio: precio });
+                        hotel.reservas.push({ _id: _id, numero: numeroReserva, huesped: datos.huesped, checkIn: checkIn, checkOut: checkOut, cantHuespedes: cantHuespedes, precio: precio });
                         return [4 /*yield*/, usuario_model_1.Usuario.sobreescribirUsuario(huesped)];
                     case 10:
-                        _a.sent();
+                        _f.sent();
                         return [4 /*yield*/, hotel_model_1.Hotel.sobreescribirHotel(hotel)];
                     case 11:
-                        _a.sent();
+                        _f.sent();
                         mongo.cerrarCliente(cliente);
                         return [2 /*return*/, __assign(__assign({ _id: _id }, datos), { numero: numeroReserva })];
                 }
