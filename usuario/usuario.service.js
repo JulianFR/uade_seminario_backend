@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -102,14 +113,19 @@ function postUsuario(_a, res) {
 }
 exports.postUsuario = postUsuario;
 function putUsuario(_a, res) {
+    var _b;
     var body = _a.body;
     return __awaiter(this, void 0, void 0, function () {
-        var usuario;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, usuario_model_1.Usuario.sobreescribirUsuario(body)];
+        var usuarios, reservas, usuario;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, usuario_model_1.Usuario.buscarUsuarioPorEmail(body.email)];
                 case 1:
-                    usuario = _b.sent();
+                    usuarios = _c.sent();
+                    reservas = ((_b = usuarios[0]) === null || _b === void 0 ? void 0 : _b.reservas) || [];
+                    return [4 /*yield*/, usuario_model_1.Usuario.sobreescribirUsuario(__assign(__assign({}, body), { reservas: reservas }))];
+                case 2:
+                    usuario = _c.sent();
                     if (usuario) {
                         return [2 /*return*/, res.status(201).json({ data: { usuario: usuario } })];
                     }
